@@ -19,14 +19,14 @@ def create_app():
     db.init_app(app)
 
     bootstrap = Bootstrap5(app)
-    
+    bootstrap
     #initialize the login manager
-    login_manager = LoginManager()
+    #login_manager = LoginManager()
     
     #set the name of the login function that lets user login
     # in our case it is auth.login (blueprintname.viewfunction name)
-    login_manager.login_view='auth.login'
-    login_manager.init_app(app)
+    #login_manager.login_view='auth.login'
+    #login_manager.init_app(app)
 
     #create a user loader function takes userid and returns User
     #from .models import User  # importing here to avoid circular references
@@ -37,10 +37,20 @@ def create_app():
     #importing views module here to avoid circular references
     # a common practice.
     from . import views
-    app.register_blueprint(views.bp)
+    app.register_blueprint(views.mainbp)
 
     from . import auth
     app.register_blueprint(auth.bp)
+
+    from . import account
+    app.register_blueprint(account.accountbp)
+
+    from . import event_listings
+    app.register_blueprint(event_listings.listingbp)
+
+    from. import event_manage
+    app.register_blueprint(event_manage.eventbp)
+
     
     return app
 

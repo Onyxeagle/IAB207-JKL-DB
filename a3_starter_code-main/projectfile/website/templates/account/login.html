@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+<html>
+   <body>
+   
+   {% block header %}
+   <header>
+     
+      <div class="container">
+         <div class="row justify-content-center">
+            <div class="col-5 col-md-6 col-sm-3">
+               <h5 id="subhead">Enter credentials to login</h5>
+               <h6 id="subtext">Login required to post events</h6>
+            </div>
+         </div>
+      </div>      
+   </header>
+   </header>
+   {% endblock  %}
+   
+   {% block content %}
+   <div class="container">
+      <div class="row justify-content-center">
+         <div class="col-5 col-md-6 col-sm-3" id="detailText">
+            {{render_form(form)}}
+         </div>
+      </div>
+   </div>
+      <!-- Esnures that the bootstrap elements are called on each page render -->
+      {{super()}}
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+   </body>
+   {% endblock %}
+</html>

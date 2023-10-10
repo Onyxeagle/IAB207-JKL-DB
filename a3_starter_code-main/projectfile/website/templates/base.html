@@ -1,20 +1,63 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>IAB207 Assignment 3</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Orchestrator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  <!-- Custom CSS file that is used for styling HTML content -->
+  <link rel="stylesheet" href="../static/style/styles.css">
+
 </head>
 
 <body>
     <!-- Header -->
     <header>
-
+        <!-- header is used to make the background image above the banner appear -->
+        <!-- There is probably a better way to do this but it works and I do not want to test fate -->
+        <div class="header">
+        </div>
         <!-- Navbar -->
-        <nav>
-        </nav>
+        <div class="banner-strip">
+          <!-- Create a container using bootstrap that contains the link banner to all the other pages -->
+          <!-- Using bootstrap to create the buttons which are then edited in CSS -->
+          <div class="container text-center" id="texthead">
+            <div class="row">
+              <div class="col-2 col-sm-2 col-md-2">
+                <a class="nav-link" href="/" id="banner">Home</a>
+              </div>
+              <div class="col-2 col-sm-2 col-md-2">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Event Manager</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="/event_manage/create_event">Create Event</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/event_manage/editable_events">Edit Event</a>
+                </div>
+              </div>
+              <div class="col">
+                <a class="nav-link" href="/account/booking_history" id="banner">Booking History</a>
+              </div>
+              <div class="col-2 col-sm-2 col-md-2">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="/account/sign_in">Sign In</a>
+                  <a class="dropdown-item" href="/account/sign_out">Sign Out</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="/account/create_account">Create Account</a>
+                </div>
+              </div>
+              <!-- Renders the search bar at the top of the screen -->
+              <div class="col-3 col-md-3 col-sm-3">
+                <div class="input-group">
+                  <input type="search" class="form-control rounded" placeholder="Search Events" aria-label="Search">
+                  <button type="button" class="btn btn-outline-light">search</button>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        
         {% block header %}
         {% endblock %}
 
@@ -24,6 +67,52 @@
     {% endblock %}
 
     <footer class="footer">
+        <div class="banner-strip" id="bottom_info">
+            <div class="container text-center" id="texthead">
+                <div class="row justify-content-center">
+                    <div class="col" id="siteheader">
+                        Site Map
+                    </div>
+                    <div class="row" id="sep">
+                      <div class="col-3 col-sm-3 col-md-3">
+                        <a class="nav-link" href="/">Home</a>
+                      </div>
+                      <div class="col-3 col-sm-3 col-md-3">
+                        <a class="nav-link" href="/event_manage/create_event">Create Event</a>
+                      </div>
+                      <div class="col-3 col-sm-3 col-md-3">
+                        <a class="nav-link" href="/event_manage/edit_event">Edit Event</a>
+                      </div>
+                    </div>
+                    <div class="row" id="sep">
+                      <div class="col-3 col-sm-3 col-md-3">
+                        <a class="nav-link" href="/account/sign_in">Sign In</a>
+                      </div>
+                      <div class="col-3 col-sm-3 col-md-3">
+                        <a class="nav-link" href="/account/sign_out">Sign Out</a>
+                      </div>
+                      <div class="col-3 col-sm-3 col-md-3">
+                        <a class="nav-link" href="/account/create_account">Create Account</a>
+                      </div>
+                    </div>
+                    <div class="row" id="sep">
+                      <div class="col-3 col-sm-3 col-md-3">
+                        <a class="nav-link" href="/account/booking_history">Booking History</a>
+                      </div>
+                      <div class="col-3 col-sm-3 col-md-3">
+                        <a class="nav-link" href="/event_manage/editable_events">User's Events</a>
+                      </div>
+                      <div class="col-3 col-sm-3 col-md-3">
+                        <a class="nav-link" href="/event_listing/ticket_purchase">Ticket Purchase</a>
+                      </div>
+                      <div class="col-3 col-sm-3 col-md-3">
+                        <a class="nav-link" href="/event_listing/view_event">Event Details</a>
+                      </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
