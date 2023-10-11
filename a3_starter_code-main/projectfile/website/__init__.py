@@ -4,17 +4,16 @@ from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
-db=SQLAlchemy()
+db = SQLAlchemy()
 
 #create a function that creates a web application
 # a web server will run this web application
 def create_app():
-  
-    app=Flask(__name__)  # this is the name of the module/package that is calling this app
+    app = Flask(__name__)  # this is the name of the module/package that is calling this app
     app.debug=True
     app.secret_key='somesecretgoeshere'
     #set the app configuration data 
-    app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///mydbname.sqlite'
+    app.config['SQLALCHEMY_DATABASE_URI']='sqlite:///orchdb.sqlite'
     #initialise db with flask app
     db.init_app(app)
 
