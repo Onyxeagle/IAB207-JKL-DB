@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm 
-from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, SelectField, DecimalField, DateTimeField, IntegerField
+from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, SelectField, DecimalField, DateTimeField, IntegerField, SearchField
 from wtforms.validators import InputRequired, Email, EqualTo
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 
@@ -70,3 +70,7 @@ class BookForm(FlaskForm):
 # the comment form that will display on each event
 class CommentForm(FlaskForm):
     submit = SubmitField('Comment')
+
+class SearchForm(FlaskForm):
+    search = SearchField('Search events', validators=[InputRequired()])
+    submit = SubmitField('Search')

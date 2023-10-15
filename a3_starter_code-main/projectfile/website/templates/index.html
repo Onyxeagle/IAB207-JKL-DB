@@ -31,6 +31,21 @@
 
    {% block content %}
    <body>
+      <!-- checks for messages and loops through results if there are any to display -->
+      {% with messages = get_flashed_messages() %}
+      {% if messages %} 
+         <div class="container-fluid">
+            <div class="row mt-3 mb-3">
+            <div class="col-md-12">
+            {% for message in messages %} 
+               <div class="alert alert-info">{{message}}</div> 
+            {% endfor %}
+            </div>
+         </div>
+      </div>
+      {% endif %}
+      {% endwith %}
+      
       <div class="container text-center">
          <!-- Header that is displayed above the event cards -->
          <div class="row justify-content-center" id="eventHeader">
