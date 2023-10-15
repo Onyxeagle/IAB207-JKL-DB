@@ -13,7 +13,17 @@ eventbp = Blueprint('manage', __name__, url_prefix='/event_manage')
 #@login_required
 def event_create():
     createForm = CreateEditForm()
-    return render_template('event_manage/create_event.html', form=createForm)
+    if createForm.validate_on_submit():
+        flash('Successfully created your event! It has been posted for all to see.')
+        db_file_path = check_upload_file(createForm)
+        event = Events(name=createForm.eventName.data, description=createForm.eventDescription.data, genre=createForm.eventGenres.data, 
+                       start_date=createForm.commenceDate.data, end_date=createForm.concludeDate.data, location=createForm.eventLocation.data, 
+                       numTickets=createForm.numTickets.data, costTickets=createForm.costTickets.data, image=db_file_path, status='Open', )
+        db.session.add(event)
+        db.session.commit()
+        print('Event created', 'Success')
+        return redirect(url_for('manage.event_create'))
+    return render_template('event_manage/create_event.html', form=createForm, heading='Create Event')
 
 # creates the route for the event edit page
 @eventbp.route('/edit_event', methods=['GET','POST'])
@@ -31,6 +41,7 @@ def check_upload_file(form):
     db_upload_path = '/static/img/' + secure_filename(filename)
     fp.save(upload_path)
     return db_upload_path
+
 
 # creates a route that will display the user's events that they have posted and are editable 
 @eventbp.route('/editable_events', methods=['GET','POST'])

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm 
-from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, SelectField, DecimalField, DateTimeField
+from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, SelectField, DecimalField, DateTimeField, IntegerField
 from wtforms.validators import InputRequired, Email, EqualTo
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 
@@ -8,14 +8,14 @@ ALLOWED_FILE = {'PNG', 'png', 'JPG', 'jpg', 'JPEG', 'jpeg'}
 # create the form that is used to display the create and edit forms for events
 class CreateEditForm(FlaskForm):
     eventName = StringField('Event Name', validators=[InputRequired()])
-    commenceDate = DateTimeField('Start Date', validators=[InputRequired()])
-    concludeDate = DateTimeField('End Date', validators=[InputRequired()])
+    commenceDate = DateTimeField('Start Date (Only accepts YYYY-MM-DD H:M format)', format='%Y-%m-%d %H:%M', validators=[InputRequired(message='Please enter a valid date')])
+    concludeDate = DateTimeField('End Date (Only accepts YYYY-MM-DD H:M format)', format='%Y-%m-%d %H:%M', validators=[InputRequired(message='Please enter a valid date')])
     eventLocation = StringField('Event Location', validators=[InputRequired()])
     eventGenres = SelectField('Event Genre', choices=['Select Genre','Electronic', 'Classical', 'Rock', 'Metal', 'Pop'], validators=[InputRequired()])
     eventDescription = TextAreaField('Event Description', validators=[InputRequired()])
-    numTickets = DecimalField('Number ofTickets', validators=[InputRequired()])
+    numTickets = IntegerField('Number ofTickets', validators=[InputRequired()])
     costTickets = DecimalField('Ticket Price ($AUD)', validators=[InputRequired()])
-    eventImage = FileField('Upload event image', validators=[FileRequired(message='cannot be empty'), FileAllowed(ALLOWED_FILE, message='supports jpg and png only')])
+    eventImage = FileField('Upload event image', validators=[FileRequired(), FileAllowed(ALLOWED_FILE, message='supports jpg and png only')])
     submit = SubmitField('Create')
 
 # create the form used to delete an event or delist it
