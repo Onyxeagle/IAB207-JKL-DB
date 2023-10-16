@@ -42,7 +42,6 @@ def check_upload_file(form):
     fp.save(upload_path)
     return db_upload_path
 
-
 # creates a route that will display the user's events that they have posted and are editable 
 @eventbp.route('/editable_events', methods=['GET','POST'])
 def editable_events():

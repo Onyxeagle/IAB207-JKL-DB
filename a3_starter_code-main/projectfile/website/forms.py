@@ -70,7 +70,3 @@ class BookForm(FlaskForm):
 # the comment form that will display on each event
 class CommentForm(FlaskForm):
     submit = SubmitField('Comment')
-
-class SearchForm(FlaskForm):
-    search = SearchField('Search events', validators=[InputRequired()])
-    submit = SubmitField('Search')

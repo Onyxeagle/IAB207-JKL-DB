@@ -54,19 +54,13 @@
             </div>
          </div>
 
-         <!-- Uses bootstrap to display the genre select form and the searchbar -->
          <div class="row justify-content-center">
-            <!-- Custom parameters that places the element in the center of the row -->
-            <div class="col-1 col-md-1 col-sm-1">
-               <!-- Selects the type of form and the options available within it -->
-               <select class="form-select-md" id="genre_select">
-                  <option selected>All Events</option>
-                  <option value="1">Rock</option>
-                  <option value="2">Electronic</option>
-                  <option value="3">Punk</option>
-                  <option value="4">Rap</option>
-                  <option value="5">Classical</option>
-               </select>
+            <!-- Uses bootstrap to display the genre select form and the searchbar -->
+            <div class="col-3 sm-3 md-3">
+               <form class="form-inline d-flex flex-nowrap" action="{{url_for('main.search')}}">
+                  <input type="text" name="search" class="form-control flex-grow-1 my-1 mr-sm-2" id="SearchForm">
+                  <button type="submit" class="flex-shrink-1 btn btn-primary ms-2">Submit</button>
+               </form>
             </div>
          </div>
       </div>

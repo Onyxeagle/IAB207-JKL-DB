@@ -1,5 +1,4 @@
 <html>
-
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,53 +12,61 @@
 <body>
     <!-- Header -->
     <header>
-        <!-- header is used to make the background image above the banner appear -->
-        <!-- There is probably a better way to do this but it works and I do not want to test fate -->
-        <div class="header">
-        </div>
-        <!-- Navbar -->
-        <div class="banner-strip">
-          <!-- Create a container using bootstrap that contains the link banner to all the other pages -->
-          <!-- Using bootstrap to create the buttons which are then edited in CSS -->
-          <div class="container text-center" id="texthead">
-            <div class="row">
-              <div class="col-2 col-sm-2 col-md-2">
-                <a class="nav-link" href="/" id="banner">Home</a>
-              </div>
-              <div class="col-2 col-sm-2 col-md-2">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Event Manager</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/event_manage/create_event">Create Event</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="/event_manage/editable_events">Edit Event</a>
-                </div>
-              </div>
-              <div class="col">
-                <a class="nav-link" href="/account/booking_history" id="banner">Booking History</a>
-              </div>
-              <div class="col-2 col-sm-2 col-md-2">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/account/sign_in">Sign In</a>
-                  <a class="dropdown-item" href="/account/sign_out">Sign Out</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="/account/create_account">Create Account</a>
-                </div>
-              </div>
-              <!-- Renders the search bar at the top of the screen -->
-              <div class="col-3 col-md-3 col-sm-3">
-                <div class="input-group">
-                  <input type="search" class="form-control rounded" placeholder="Search Events" aria-label="Search">
-                  <button type="button" class="btn btn-outline-light">search</button>
-                  </div>
-              </div>
+      <div class="p-5 bg-primary text-white" id="jumbo">
+        <div class="row">
+          <div class="col-3 col-md-3 col-sm-3">
+            <h1>Orchestrator</h1>
+            <p>For all your music event management needs</p>
+          </div>
+          <div class="col-3 col-md-3 col-sm-2 ms-auto">
+            <div class="input-group justify-content-end">
+              <!-- if user is not logged in -->
+              <a class="nav-item nav-link" href="/account/sign_in">Sign In &ensp;</a>
+              <a class="nav-item nav-link" href="/account/create_account">Create Account &ensp;</a>
+              <!-- if user is logged in display this -->
+              <!-- <p>Hello, {{user}} &ensp;</p>-->
+              <a class="nav-item nav-link" href="/account/sign_out">Sign Out &ensp;</a>
             </div>
           </div>
         </div>
+      </div>
 
-        
-        {% block header %}
-        {% endblock %}
+      <!-- Navbar -->
+      <div class="banner-strip">
+        <!-- Create a container using bootstrap that contains the link banner to all the other pages -->
+        <!-- Using bootstrap to create the buttons which are then edited in CSS -->
+        <div class="container text-center" id="texthead">
+          <div class="row">
+            <div class="col-2 col-sm-2 col-md-2">
+              <a class="nav-link" href="/" id="banner">Home</a>
+            </div>
+            <div class="col-2 col-sm-2 col-md-2">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Event Manager</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/event_manage/create_event">Create Event</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/event_manage/editable_events">Edit Event</a>
+              </div>
+            </div>
+            <div class="col">
+              <a class="nav-link" href="/account/booking_history" id="banner">Booking History</a>
+            </div>
+            <div class="col-2 col-sm-2 col-md-2">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/account/sign_in">Sign In</a>
+                <a class="dropdown-item" href="/account/sign_out">Sign Out</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/account/create_account">Create Account</a>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {% block header %}
+      {% endblock %}
 
     </header>
 
