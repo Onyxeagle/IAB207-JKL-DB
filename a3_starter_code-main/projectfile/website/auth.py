@@ -3,10 +3,34 @@ from werkzeug.security import generate_password_hash,check_password_hash
 #from .models import User
 from .forms import LoginForm, CreateAccountForm
 from flask_login import login_user, login_required,logout_user
+from .models import User
 from . import db
 
 #create a blueprint
-bp = Blueprint('auth', __name__)
+auth_bp = Blueprint('auth', __name__)
+
+@auth_bp.route('/login', methods=['GET', 'POST'])
+def login():
+    print('In Login testing')
+    login = LoginForm
+    error = None
+    if login.validate_on_submit == True:
+        username = login.user_name.data
+        password = login.password.data
+        user = db.session.scalar(db.select(User).where(User.name == username))
+        if user is None:
+            error = 'Incorrect credentials supplied'
+        elif not check_password_hash(User.password_hash, password):
+            error = 'Incorrect credentials supplied'
+        if error is None:
+            #everything is in order, login the user with Flask Login
+            login_user(user)
+            return redirect(url_for('main.index'))
+        else:
+            flash(error)
+    return render_template('user.html', form = login, heading='Login')
+
+
 
 # this is a hint for a login function
 # @bp.route('/login', methods=['GET', 'POST'])
@@ -32,3 +56,4 @@ bp = Blueprint('auth', __name__)
 #         else:
 #             flash(error)
 #     return render_template('user.html', form=login_form, heading='Login')
+
