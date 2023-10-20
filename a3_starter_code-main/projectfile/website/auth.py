@@ -17,7 +17,7 @@ def login():
     if login.validate_on_submit == True:
         username = login.user_name.data
         password = login.password.data
-        user = db.session.scalar(db.select(User).where(User.name == username))
+        user = db.session.scalar(db.select(User).where(User.name == username)) #this is a query
         if user is None:
             error = 'Incorrect credentials supplied'
         elif not check_password_hash(User.password_hash, password):
