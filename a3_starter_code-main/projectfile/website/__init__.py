@@ -17,7 +17,7 @@ def create_app():
     #initialise db with flask app
     db.init_app(app)
 
-    bootstrap = Bootstrap5(app)
+    Bootstrap5(app)
 
     #initialize the login manager
     login_manager = LoginManager()
