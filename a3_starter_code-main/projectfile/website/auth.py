@@ -2,7 +2,7 @@ from flask import Blueprint, flash, render_template, request, url_for, redirect
 from werkzeug.security import generate_password_hash,check_password_hash
 #from .models import User
 from .forms import LoginForm, CreateAccountForm
-from flask_login import login_user, login_required,logout_user
+from flask_login import login_user, login_required, logout_user
 from .models import User
 from . import db
 
@@ -30,30 +30,31 @@ def login():
             flash(error)
     return render_template('user.html', form = login, heading='Login')
 
+@auth_bp('/register', methods = ['GET', 'POST'])
+def register():
+    print('register testing')
+    #set up variables and form
+    register = CreateAccountForm()
+    if register.validate_on_submit == True:
+        username = register.user_name.data
+        init_password = register.password.data
+        email = register.email_id.data
+        #check if a user or email already exists
+        user = db.session.scalar(db.select(User).where(User.name == username))
+        email_test = db.session.scalar(db.select(User).where(User.emailid == email))
+        if user or email_test: #this returns true when user and/or email is not None
+            flash('Username or email already in use, please use another')
+            return redirect(url_for('auth.register'))
+        password_hash = generate_password_hash(init_password)
+        new_user = User(name = username, password_hash = password_hash, emailid = email)
+        db.session.add(new_user)
+        db.session.commit()
+        print('You are now registered')
 
-
-# this is a hint for a login function
-# @bp.route('/login', methods=['GET', 'POST'])
-# def authenticate(): #view function
-#     print('In Login View function')
-#     login_form = LoginForm()
-#     error=None
-#     if(login_form.validate_on_submit()==True):
-#         user_name = login_form.user_name.data
-#         password = login_form.password.data
-#         user = User.query.filter_by(name=user_name).first()
-#         if user is None:
-#             error='Incorrect credentials supplied'
-#         elif not check_password_hash(user.password_hash, password): # takes the hash and password
-#             error='Incorrect credentials supplied'
-#         if error is None:
-#             login_user(user)
-#             nextp = request.args.get('next') #this gives the url from where the login page was accessed
-#             print(nextp)
-#             if next is None or not nextp.startswith('/'):
-#                 return redirect(url_for('index'))
-#             return redirect(nextp)
-#         else:
-#             flash(error)
-#     return render_template('user.html', form=login_form, heading='Login')
+        #login the registered user automatically
+        #login_user(new_user)
+        return redirect(url_for('auth.login'))
+    else:
+        return render_template('user.html', form=register, heading='Register')
+    
 
