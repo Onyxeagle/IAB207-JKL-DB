@@ -30,7 +30,7 @@ def login():
             flash(error)
     return render_template('user.html', form = login, heading='Login')
 
-@auth_bp('/register', methods = ['GET', 'POST'])
+@auth_bp.route('/register', methods = ['GET', 'POST'])
 def register():
     print('register testing')
     #set up variables and form
