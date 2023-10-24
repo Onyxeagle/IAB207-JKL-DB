@@ -19,7 +19,7 @@ def event_create():
         db_file_path = check_upload_file(createForm)
         event = Events(name=createForm.eventName.data, description=createForm.eventDescription.data, genre=createForm.eventGenres.data, 
                        start_date=createForm.commenceDate.data, end_date=createForm.concludeDate.data, location=createForm.eventLocation.data, 
-                       numTickets=createForm.numTickets.data, costTickets=createForm.costTickets.data, image=db_file_path, status='Open', )
+                       numTickets=createForm.numTickets.data, costTickets=createForm.costTickets.data, image=db_file_path, status='Open')
         db.session.add(event)
         db.session.commit()
         print('Event created', 'Success')

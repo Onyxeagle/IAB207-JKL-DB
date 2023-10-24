@@ -21,14 +21,13 @@
           <div class="col-3 col-md-3 col-sm-2 ms-auto">
             <div class="input-group justify-content-end">
               {% if current_user.is_authenticated %}
-              <!-- if user is logged in display this -->
-              <p>Hello, {{current_user.name}}! &ensp;</p>
-              
+                <!-- if user is logged in display this -->
+                <p>Hello, {{current_user.name}}! &ensp;</p>
+                <a class="nav-item nav-link" href="/account/sign_out">Sign Out &ensp;</a>
               {% else %}
-              <!-- if user is not logged in -->
-              <a class="nav-item nav-link" href="/account/sign_out">Sign Out &ensp;</a>
-              <a class="nav-item nav-link" href="/account/sign_in">Sign In &ensp;</a>
-              <a class="nav-item nav-link" href="/account/create_account">Create Account &ensp;</a>
+                <!-- if user is not logged in -->
+                <a class="nav-item nav-link" href="/account/sign_in">Sign In &ensp;</a>
+                <a class="nav-item nav-link" href="/account/create_account">Create Account &ensp;</a>
               {% endif %}
             </div>
           </div>
@@ -53,7 +52,7 @@
               </div>
             </div>
             <div class="col-4 col-sm-2 col-md-4">
-              <a class="nav-link" href="/account/booking_history" id="banner">Booking History</a>
+              <a class="nav-link" href="/user/booking_history" id="banner">Booking History</a>
             </div>
           </div>
         </div>
