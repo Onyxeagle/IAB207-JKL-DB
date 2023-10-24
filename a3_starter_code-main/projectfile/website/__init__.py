@@ -35,19 +35,12 @@ def create_app():
     from . import views
     app.register_blueprint(views.mainbp)
 
-    from . import auth_bp
-    app.register_blueprint(auth_bp.bp)
-
-    from . import account
+    from . import auth, account, event_listings, event_manage
+    app.register_blueprint(auth.auth_bp)
     app.register_blueprint(account.accountbp)
-
-    from . import event_listings
     app.register_blueprint(event_listings.listingbp)
-
-    from. import event_manage
     app.register_blueprint(event_manage.eventbp)
 
-    
     return app
 
 
