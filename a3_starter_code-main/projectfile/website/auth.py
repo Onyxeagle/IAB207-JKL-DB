@@ -7,14 +7,14 @@ from .models import User
 from . import db
 
 #create a blueprint
-auth_bp = Blueprint('aut', __name__, url_prefix='/account')
+auth_bp = Blueprint('auth', __name__, url_prefix='/account')
 
 @auth_bp.route('/sign_in', methods=['GET', 'POST'])
 def login():
     print('In Login testing')
     login = LoginForm()
     error = None
-    if login.validate_on_submit == True:
+    if login.validate_on_submit() == True:
         username = login.user_name.data
         password = login.password.data
         user = db.session.scalar(db.select(User).where(User.name == username)) #this is a query 
@@ -35,13 +35,14 @@ def register():
     print('register testing')
     #set up variables and form
     register = CreateAccountForm()
-    if register.validate_on_submit == True:
+    if register.validate_on_submit() == True:
         username = register.user_name.data
         init_password = register.password.data
         email = register.email_id.data
         #check if a user or email already exists
-        user = db.session.scalar(db.select(User).where(User.name == username) or db.select(User).where(User.emailid == email))
-        if user: #this returns true when user and/or email is not None
+        user = db.session.scalar(db.select(User).where(User.name == username))
+        user_mail = db.session.scalar(db.select(User).where(User.emailid == email))
+        if user or user_mail: #this returns true when user and/or email is not None
             flash('Username or email already in use, please use another')
             print('Username or email already in use, please use another')
             return redirect(url_for('auth.register'))
