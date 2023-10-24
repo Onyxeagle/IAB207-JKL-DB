@@ -20,12 +20,16 @@
           </div>
           <div class="col-3 col-md-3 col-sm-2 ms-auto">
             <div class="input-group justify-content-end">
+              {% if current_user.is_authenticated %}
+              <!-- if user is logged in display this -->
+              <p>Hello, {{current_user.name}}! &ensp;</p>
+              
+              {% else %}
               <!-- if user is not logged in -->
+              <a class="nav-item nav-link" href="/account/sign_out">Sign Out &ensp;</a>
               <a class="nav-item nav-link" href="/account/sign_in">Sign In &ensp;</a>
               <a class="nav-item nav-link" href="/account/create_account">Create Account &ensp;</a>
-              <!-- if user is logged in display this -->
-              <!-- <p>Hello, {{user}} &ensp;</p>-->
-              <a class="nav-item nav-link" href="/account/sign_out">Sign Out &ensp;</a>
+              {% endif %}
             </div>
           </div>
         </div>
@@ -37,10 +41,10 @@
         <!-- Using bootstrap to create the buttons which are then edited in CSS -->
         <div class="container text-center" id="texthead">
           <div class="row">
-            <div class="col-2 col-sm-2 col-md-2">
+            <div class="col-4 col-sm-2 col-md-4">
               <a class="nav-link" href="/" id="banner">Home</a>
             </div>
-            <div class="col-2 col-sm-2 col-md-2">
+            <div class="col-4 col-sm-2 col-md-4">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Event Manager</a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="/event_manage/create_event">Create Event</a>
@@ -48,18 +52,8 @@
                 <a class="dropdown-item" href="/event_manage/editable_events">Edit Event</a>
               </div>
             </div>
-            <div class="col">
+            <div class="col-4 col-sm-2 col-md-4">
               <a class="nav-link" href="/account/booking_history" id="banner">Booking History</a>
-            </div>
-            <div class="col-2 col-sm-2 col-md-2">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="/account/sign_in">Sign In</a>
-                <a class="dropdown-item" href="/account/sign_out">Sign Out</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="/account/create_account">Create Account</a>
-              </div>
-            </div>
             </div>
           </div>
         </div>
