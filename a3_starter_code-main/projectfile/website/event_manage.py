@@ -11,7 +11,7 @@ eventbp = Blueprint('manage', __name__, url_prefix='/event_manage')
 
 # creates a route for the event creation page and connects it to the database on submission
 @eventbp.route('/create_event', methods=['GET','POST'])
-#@login_required
+@login_required
 def event_create():
     createForm = CreateEditForm()
     if (createForm.validate_on_submit() and valid_date(createForm.commenceDate.data, createForm.concludeDate.data)==True):
