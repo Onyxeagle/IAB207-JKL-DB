@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for
+from flask_login import login_required, current_user
 from .forms import TicketPurchase, BookForm, CommentForm
 from .models import Events, Comment
 from . import db
@@ -10,6 +11,7 @@ listingbp = Blueprint('listing', __name__, url_prefix='/event_listing')
 # creates the route used for the user purchasing tickets
 # the user will need to be logged in to view this page
 @listingbp.route('/ticket_purchase', methods=['GET','POST'])
+@login_required
 def purchase_tickets():
     purchaseform = TicketPurchase()
     return render_template('event_listings/purchase_tickets.html', form=purchaseform)
