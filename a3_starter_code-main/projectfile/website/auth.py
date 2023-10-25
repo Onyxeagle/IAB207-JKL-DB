@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, render_template, request, url_for, redirect
-from werkzeug.security import generate_password_hash,check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 #from .models import User
 from .forms import LoginForm, CreateAccountForm, HistoryForm
 from flask_login import login_user, login_required, logout_user
@@ -20,7 +20,7 @@ def login():
         user = db.session.scalar(db.select(User).where(User.name == username)) #this is a query 
         if user is None:
             error = 'Incorrect credentials supplied'
-        elif not check_password_hash(User.password_hash, password):
+        elif not check_password_hash(user.password_hash, password):
             error = 'Incorrect credentials supplied'
         if error is None:
             #everything is in order, login the user with Flask Login
@@ -47,8 +47,8 @@ def register():
             print('Username or email already in use, please use another')
             return redirect(url_for('auth.register'))
         else:
-            hashed_password = generate_password_hash(init_password)
-            new_user = User(name=username, password_hash=hashed_password, emailid=email)
+            hashed_password = generate_password_hash(init_password, method ='pbkdf2:sha256', salt_length = 8)
+            new_user = User(name = username, password_hash = hashed_password, emailid = email)
             db.session.add(new_user)
             db.session.commit()
             print('You are now registered')
@@ -57,7 +57,7 @@ def register():
         #login_user(new_user)
         return redirect(url_for('auth.login'))
     else:    
-        return render_template('account/create_account.html', form=register, heading='Register')
+        return render_template('account/create_account.html', form = register, heading ='Register')
     
 @auth_bp.route('/sign_out')
 @login_required
