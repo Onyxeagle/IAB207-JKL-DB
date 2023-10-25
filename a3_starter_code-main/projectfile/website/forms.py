@@ -8,8 +8,8 @@ ALLOWED_FILE = {'PNG', 'png', 'JPG', 'jpg', 'JPEG', 'jpeg'}
 # create the form that is used to display the create and edit forms for events
 class CreateEditForm(FlaskForm):
     eventName = StringField('Event Name', validators=[InputRequired()])
-    commenceDate = DateTimeField('Start Date (Only accepts YYYY-MM-DD H:M format)', format='%Y-%m-%d %H:%M', validators=[InputRequired(message='Please enter a valid date')])
-    concludeDate = DateTimeField('End Date (Only accepts YYYY-MM-DD H:M format)', format='%Y-%m-%d %H:%M', validators=[InputRequired(message='Please enter a valid date')])
+    commenceDate = DateTimeField('Start Date (Only accepts YYYY-MM-DD H:M format and 24hr time)', format='%Y-%m-%d %H:%M', validators=[InputRequired(message='Please enter a valid date')])
+    concludeDate = DateTimeField('End Date (Only accepts YYYY-MM-DD H:M format and 24hr time)', format='%Y-%m-%d %H:%M', validators=[InputRequired(message='Please enter a valid date')])
     eventLocation = StringField('Event Location', validators=[InputRequired()])
     eventGenres = SelectField('Event Genre', choices=['Select Genre','Electronic', 'Classical', 'Rock', 'Metal', 'Pop'], validators=[InputRequired()])
     eventDescription = TextAreaField('Event Description', validators=[InputRequired()])
@@ -32,7 +32,7 @@ class LogoutForm(FlaskForm):
 # this creates the login form that the user will pass data to so they can access their account
 class LoginForm(FlaskForm):
     user_name = StringField('User Name', validators=[InputRequired('Enter user name')])
-    password = StringField('Password', validators=[InputRequired('Enter user password')])
+    password = PasswordField('Password', validators=[InputRequired('Enter user password')])
     submit = SubmitField("Login")
 
 # the form used to create an account which takes parameters to differentiate users

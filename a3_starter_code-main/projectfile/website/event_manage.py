@@ -7,6 +7,7 @@ from .models import Events
 from . import db
 from datetime import datetime
 
+
 eventbp = Blueprint('manage', __name__, url_prefix='/event_manage')
 
 # creates a route for the event creation page and connects it to the database on submission
@@ -19,7 +20,7 @@ def event_create():
         db_file_path = check_upload_file(createForm)
         event = Events(name=createForm.eventName.data, description=createForm.eventDescription.data, genre=createForm.eventGenres.data, 
                        start_date=createForm.commenceDate.data, end_date=createForm.concludeDate.data, location=createForm.eventLocation.data, 
-                       numTickets=createForm.numTickets.data, costTickets=createForm.costTickets.data, image=db_file_path, status='Open')
+                       numTickets=createForm.numTickets.data, costTickets=createForm.costTickets.data, image=db_file_path, status='Open', event_poster=current_user.id)
         db.session.add(event)
         db.session.commit()
         print('Event created', 'Success')
