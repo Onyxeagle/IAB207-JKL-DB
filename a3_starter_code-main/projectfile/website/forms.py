@@ -64,7 +64,7 @@ class TicketPurchase(FlaskForm):
 # to be done
 # this is to go on the event page and will lead to the ticket purchase page
 class BookForm(FlaskForm):
-    submit = SubmitField('Purchase Ticket (x remaining)')
+    submit = SubmitField('Purchase Ticket(s)')
  
 # to be done
 # the comment form that will display on each event

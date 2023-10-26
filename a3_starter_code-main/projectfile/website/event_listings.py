@@ -22,4 +22,4 @@ def event_details(id):
     event = db.session.scalar(db.select(Events).where(Events.id == id))
     bookform = BookForm()
     comment = CommentForm()
-    return render_template('event_listings/event_details.html', form=bookform, form2=comment)
+    return render_template('event_listings/event_details.html', form=bookform, form2=comment, event=event)

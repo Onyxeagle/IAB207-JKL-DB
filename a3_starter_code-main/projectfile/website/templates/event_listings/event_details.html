@@ -5,12 +5,20 @@
    
    {% block header %}
    <header>
-   <div class="container text-center" id="textbody">
+   <div class="container text-center">
       <div class="row">
          <div class="col-12 col-md-12 col-sm-12">
-            <h id="subhead">
-               Details for [EVENT NAME]
-            </h>
+            <h1 id="subhead">
+               Details for {{event.name}}
+            </h1>
+            <div id="subhead">
+               <p>{{event.description}}</p>
+               <img src="{{event.image}}" alt="eventImage" width="450" height="350"> 
+               <p>Genre: {{event.genre}}</p>
+               <p>Event Start: {{event.start_date}} &nbsp;&nbsp;-&nbsp;&nbsp; Event End: {{event.end_date}}</p>
+               <p>Number of Tickets: {{event.numTickets}} &nbsp;&nbsp;-&nbsp;&nbsp; Coster Per Ticket: ${{event.costTickets}}</p>
+               
+            </div>
       </div>
    </div>
    </header>
