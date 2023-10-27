@@ -69,4 +69,5 @@ class BookForm(FlaskForm):
 # to be done
 # the comment form that will display on each event
 class CommentForm(FlaskForm):
-    submit = SubmitField('Comment')
+    comment = TextAreaField('Write a comment', [InputRequired()])
+    submit = SubmitField("Post comment")
