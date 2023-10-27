@@ -117,22 +117,6 @@ body {
   height: 20vw;
 }
 
-/* Below are the two stylings used for the event details page that dictate the font size and family as well as weighting */ 
-#detailHeader {
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  font-size: 20px;
-  font-weight: bold;
-}
-#detailText {
-  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  font-size: 20px;
-}
-
-/* This allows for better spacing between the event details making it easier to visually digest */
-#details_content {
-  padding-top: 15px;
-}
-
 /* The CSS below is used to place the comment button and size it */
 #postComment {
   font-size: 1.5vw;
@@ -161,4 +145,30 @@ body {
 #sep {
   padding-top: 5px;
   padding-bottom: 5px;
+}
+
+/* Below are the two stylings used for the event details page that dictate the font size and family as well as weighting */ 
+#viewHeader {
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 60px;
+  font-weight: bolder;
+}
+#viewText {
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/* This allows for better spacing between the event details making it easier to visually digest */
+#viewPaddingTop {
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  padding-top: 15px;
+}
+#viewPaddingBottom {
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 25px;
 }

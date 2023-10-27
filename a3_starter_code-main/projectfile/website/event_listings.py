@@ -23,3 +23,16 @@ def event_details(id):
     bookform = BookForm()
     comment = CommentForm()
     return render_template('event_listings/event_details.html', form=bookform, form2=comment, event=event)
+
+# This function takes the information passed into the comment form and stores it into the database
+@listingbp.route('/<id>/comment', methods=['GET','POST'])
+@login_required
+def eventComments(id):
+    commentForm = CommentForm()
+    commented_event = db.session.scalar(db.select(Events).where(Events.id == id))
+    if commentForm.validate_on_submit():
+        comment_to_post = Comment(text=commentForm.comment.data, user_id=current_user.id, events_id=commented_event.id)
+        db.session.add(comment_to_post)
+        db.session.commit()
+        print('Comment made')
+    return redirect(url_for('listing.event_details', id=id))
