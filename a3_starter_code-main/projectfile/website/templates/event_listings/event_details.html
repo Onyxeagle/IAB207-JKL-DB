@@ -27,7 +27,7 @@
          <div class="row justify-content-center">
             <div class="col-5 col-md-5 col-sm-3" id="detailText">
                <center>
-                  {{render_form(form)}}
+                  {{render_form(form, "/event_listing/{0}/ticket_purchase".format(event.id))}}
                </center>
               
             </div>

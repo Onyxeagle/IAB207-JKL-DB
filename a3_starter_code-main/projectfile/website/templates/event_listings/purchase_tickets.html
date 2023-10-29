@@ -2,15 +2,15 @@
 {% from 'bootstrap5/form.html' import render_form %}
 <html>
    <body>
-   
    {% block header %}
    <header>
    <div class="container text-center" id="textbody">
       <div class="row">
          <div class="col-12 col-md-12 col-sm-12">
             <h id="subhead">
-               Purchase tickets for [EVENT NAME]
+               Purchase tickets for {{event.name}}
             </h>
+            <p>Hosted by {{event.user.name}}</p>
       </div>
    </div>
    </header>
@@ -36,7 +36,6 @@
          <div class="row justify-content-center">
             <div class="col-5 col-md-5 col-sm-3" id="detailText">
                {{render_form(form)}}
-               <p id="detailText">Total: $: DD.CC</p>
             </div>
          </div>
       </div>

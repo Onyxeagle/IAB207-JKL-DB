@@ -47,7 +47,7 @@ class Bookings(db.Model):
     __tablename__ = 'bookings'
     id = db.Column(db.Integer, primary_key=True)
     bought_tickets = db.Column(db.Integer)
-    total_cost = db.Column(db.Integer)
+    total_cost = db.Column(db.DECIMAL(2))
     # foreign keys
     event_details = db.Column(db.Integer, db.ForeignKey('events.id'))
     ticket_purchaser = db.Column(db.Integer, db.ForeignKey('users.id'))

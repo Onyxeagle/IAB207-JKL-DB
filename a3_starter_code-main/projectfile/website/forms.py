@@ -58,7 +58,7 @@ class ValidEditForm(FlaskForm):
 # to be done
 # this form will be used to allow users to purchase tickets
 class TicketPurchase(FlaskForm):
-    numTickets = DecimalField('Number of tickets to purchase', validators=[InputRequired()])
+    numTickets = IntegerField('Number of tickets to purchase', validators=[InputRequired()])
     submit = SubmitField('Purchase Ticket(s)')
 
 # to be done
