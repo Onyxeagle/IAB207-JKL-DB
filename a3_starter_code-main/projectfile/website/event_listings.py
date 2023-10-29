@@ -3,8 +3,7 @@ from flask_login import login_required, current_user
 from .forms import TicketPurchase, BookForm, CommentForm, TicketPurchase
 from .models import Events, Comment, Bookings
 from . import db
-import os
-from werkzeug.utils import secure_filename
+from sqlalchemy import update
 
 listingbp = Blueprint('listing', __name__, url_prefix='/event_listing')
 
@@ -42,4 +41,16 @@ def purchase_tickets(id):
         puchase = Bookings(bought_tickets=purchaseform.numTickets.data, total_cost=totalCost, event_details=purchase_event.id, ticket_purchaser=current_user.id)
         db.session.add(puchase)
         db.session.commit()
+        decrement_tickets(id, purchaseform.numTickets.data)
+        return redirect(url_for('listing.purchase_tickets', id=id))
     return render_template('event_listings/purchase_tickets.html', form=purchaseform, event=purchase_event)
+
+# this function updates the number of purchasable tickets when a user makes a purchase
+def decrement_tickets(id, purchasedTickets):
+    purchase_event = db.session.scalar(db.select(Events).where(Events.id == id))
+    tickets = purchase_event.numTickets
+    print(tickets)
+    db.session.query(Events).\
+    filter(id == id).\
+    update({'numTickets': (tickets - purchasedTickets)})
+    db.session.commit()
