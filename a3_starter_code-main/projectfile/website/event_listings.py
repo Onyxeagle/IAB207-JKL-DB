@@ -3,7 +3,6 @@ from flask_login import login_required, current_user
 from .forms import TicketPurchase, BookForm, CommentForm, TicketPurchase
 from .models import Events, Comment, Bookings
 from . import db
-from sqlalchemy import update
 
 listingbp = Blueprint('listing', __name__, url_prefix='/event_listing')
 
@@ -38,10 +37,10 @@ def purchase_tickets(id):
     purchase_event = db.session.scalar(db.select(Events).where(Events.id == id))
     if (purchaseform.validate_on_submit() and ticket_check(id, purchaseform.numTickets.data))==True:
         totalCost = purchaseform.numTickets.data * purchase_event.costTickets
-        puchase = Bookings(bought_tickets=purchaseform.numTickets.data, total_cost=totalCost, event_details=purchase_event.id, ticket_purchaser=current_user.id)
+        puchase = Bookings(bought_tickets=purchaseform.numTickets.data, total_cost=totalCost, event_details=purchase_event.name, ticket_purchaser=current_user.id)
         db.session.add(puchase)
         db.session.commit()
-        decrement_tickets(id, purchaseform.numTickets.data)
+        decrement_tickets(purchase_event.id, purchaseform.numTickets.data)
         return redirect(url_for('listing.purchase_tickets', id=id))
     return render_template('event_listings/purchase_tickets.html', form=purchaseform, event=purchase_event)
 
@@ -52,7 +51,7 @@ def decrement_tickets(id, purchasedTickets):
     print(tickets)
     # updates a row with the same event id as the one passed to the function
     db.session.query(Events).\
-    filter(id == id).\
+    filter(Events.id == id).\
     update({'numTickets': (tickets - purchasedTickets)})
     db.session.commit()
 

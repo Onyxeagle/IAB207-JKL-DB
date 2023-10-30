@@ -11,6 +11,7 @@
                Purchase tickets for {{event.name}}
             </h>
             <p>Hosted by {{event.user.name}}</p>
+            <p>{{event.numTickets}} tickets remaining!</p>
       </div>
    </div>
    </header>
@@ -35,7 +36,9 @@
       <div class="container">
          <div class="row justify-content-center">
             <div class="col-5 col-md-5 col-sm-3" id="detailText">
-               {{render_form(form)}}
+               <center>
+                  {{render_form(form)}}
+               </center>
             </div>
          </div>
       </div>

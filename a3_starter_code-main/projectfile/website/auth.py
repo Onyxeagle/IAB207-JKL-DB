@@ -2,9 +2,10 @@ from flask import Blueprint, flash, render_template, request, url_for, redirect
 from werkzeug.security import generate_password_hash, check_password_hash
 #from .models import User
 from .forms import LoginForm, CreateAccountForm, HistoryForm
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 from .models import User
 from . import db
+from .models import Events, User, Bookings
 
 #create a blueprint
 auth_bp = Blueprint('auth', __name__, url_prefix='/account')
@@ -66,7 +67,9 @@ def logout():
     return redirect(url_for('main.index'))
 
 # create the route to the booking history page
-@auth_bp.route('/booking_history', methods=['GET','POST'])
-def History():
-    historyform = HistoryForm()
-    return render_template('account/account_history.html', form=historyform)
+@auth_bp.route('booking_history/', methods=['GET','POST'])
+@login_required
+def event_purchases():
+    id = current_user.id
+    user = db.session.scalar(db.select(User).where(User.id == id))
+    return render_template('account/account_history.html', purchase=user)
