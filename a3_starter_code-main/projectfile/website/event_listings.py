@@ -40,6 +40,8 @@ def purchase_tickets(id):
         puchase = Bookings(bought_tickets=purchaseform.numTickets.data, total_cost=totalCost, event_details=purchase_event.name, ticket_purchaser=current_user.id)
         db.session.add(puchase)
         db.session.commit()
+        real = db.session.query(Bookings).order_by(Bookings.id.desc()).first()
+        flash(f'Purchase successful! Your transaction ID is: {real.id}')
         decrement_tickets(purchase_event.id, purchaseform.numTickets.data)
         return redirect(url_for('listing.purchase_tickets', id=id))
     return render_template('event_listings/purchase_tickets.html', form=purchaseform, event=purchase_event)
@@ -66,5 +68,4 @@ def ticket_check(id, purchasedTickets):
         flash('Cannot purchase that number of tickets')
         return False
     else:
-        flash('Purchase successful')
         return True

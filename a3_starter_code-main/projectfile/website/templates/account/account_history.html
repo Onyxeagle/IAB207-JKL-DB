@@ -24,10 +24,9 @@
             <div class="jumbotron">
                <h1 class="display-6">Transaction ID: {{purchases.id}}</h1>
                <p class="display-7">Event Name: {{purchases.event_details}}</p>
-               <hr class="display-8">
-                  <p>Number of tickets purchased: x{{purchases.bought_tickets}}</p>
-                  <p>Total cost of order: ${{purchases.total_cost}}</p>
-               </hr>
+               <p>Number of tickets purchased: x{{purchases.bought_tickets}}</p>
+               <p>Total cost of order: ${{purchases.total_cost}}</p>
+               <hr>
             </div>
             {% endfor %} 
          </div>
