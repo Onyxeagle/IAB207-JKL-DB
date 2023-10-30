@@ -15,7 +15,7 @@ eventbp = Blueprint('manage', __name__, url_prefix='/event_manage')
 @login_required
 def event_create():
     createForm = CreateEditForm()
-    if (createForm.validate_on_submit() and valid_date(createForm.commenceDate.data, createForm.concludeDate.data)==True):
+    if (createForm.validate_on_submit() and valid_date(createForm.commenceDate.data, createForm.concludeDate.data))==True:
         flash('Successfully created your event! It has been posted for all to see.')
         db_file_path = check_upload_file(createForm)
         event = Events(name=createForm.eventName.data, description=createForm.eventDescription.data, genre=createForm.eventGenres.data, 

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_required, current_user
 from .forms import TicketPurchase, BookForm, CommentForm, TicketPurchase
 from .models import Events, Comment, Bookings
@@ -36,7 +36,7 @@ def eventComments(id):
 def purchase_tickets(id):
     purchaseform = TicketPurchase()
     purchase_event = db.session.scalar(db.select(Events).where(Events.id == id))
-    if purchaseform.validate_on_submit():
+    if (purchaseform.validate_on_submit() and ticket_check(id, purchaseform.numTickets.data))==True:
         totalCost = purchaseform.numTickets.data * purchase_event.costTickets
         puchase = Bookings(bought_tickets=purchaseform.numTickets.data, total_cost=totalCost, event_details=purchase_event.id, ticket_purchaser=current_user.id)
         db.session.add(puchase)
@@ -50,7 +50,22 @@ def decrement_tickets(id, purchasedTickets):
     purchase_event = db.session.scalar(db.select(Events).where(Events.id == id))
     tickets = purchase_event.numTickets
     print(tickets)
+    # updates a row with the same event id as the one passed to the function
     db.session.query(Events).\
     filter(id == id).\
     update({'numTickets': (tickets - purchasedTickets)})
     db.session.commit()
+
+# function that checks the tickets being purchased against the available tickets and provides the appropriate response
+def ticket_check(id, purchasedTickets):
+    purchase_event = db.session.scalar(db.select(Events).where(Events.id == id))
+    availableTickets = purchase_event.numTickets
+    if purchasedTickets > availableTickets:
+        flash('Cannot order more tickets than what is available')
+        return False
+    elif purchasedTickets <= 0:
+        flash('Cannot purchase that number of tickets')
+        return False
+    else:
+        flash('Purchase successful')
+        return True
