@@ -31,8 +31,22 @@ def event_create():
 @eventbp.route('/<id>/edit_event', methods=['GET','POST'])
 def event_edit(id):
     editForm = CreateEditForm()
+    event = db.session.query(Events).filter(Events.id == id)
+    if (editForm.validate_on_submit() and valid_date(editForm.commenceDate.data, editForm.concludeDate.data))==True:
+        db_file_path = check_upload_file(editForm)
+        # updates a row with the same event id as the one passed to the function
+        db.session.query(Events).\
+        filter(Events.id == id).\
+        update({'name': editForm.eventName.data ,'start_date': editForm.commenceDate.data,'end_date': editForm.concludeDate.data,
+                'description': editForm.eventDescription.data,'genre': editForm.eventGenres.data,'image': db_file_path, 
+               'numTickets': editForm.numTickets.data,'costTickets': editForm.costTickets.data,'location': editForm.eventLocation.data})
+        db.session.commit()
+        return redirect(url_for('listing.event_details', id=id))
     deleteForm = DeleteForm()
-    return render_template('event_manage/edit_event.html', form=editForm, form2=deleteForm)
+    if deleteForm.validate_on_submit():
+        pass
+    return render_template('event_manage/edit_event.html', form=editForm, form2=deleteForm, event=event)
+
 
 # a function that is used to direct the directory pathway for the image the user uploads
 def check_upload_file(form):
