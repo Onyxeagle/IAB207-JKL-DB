@@ -21,7 +21,6 @@ class CreateEditForm(FlaskForm):
 # create the form used to delete an event or delist it
 # this won't actually delete the event record but will change it's status and prevent ticket purchase
 class DeleteForm(FlaskForm):
-    PasswordField = StringField('Enter Password to delete', validators=[InputRequired()])
     delete = SubmitField('Delete')
 
 # a simple form for the user to log out

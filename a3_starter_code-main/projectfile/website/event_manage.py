@@ -44,7 +44,11 @@ def event_edit(id):
         return redirect(url_for('listing.event_details', id=id))
     deleteForm = DeleteForm()
     if deleteForm.validate_on_submit():
-        pass
+        stats = "cancelled"
+        db.session.query(Events).\
+        filter(Events.id == id).\
+        update({'status': stats})
+        db.session.commit()
     return render_template('event_manage/edit_event.html', form=editForm, form2=deleteForm, event=event)
 
 
