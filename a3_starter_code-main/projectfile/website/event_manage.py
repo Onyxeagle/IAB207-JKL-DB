@@ -28,8 +28,8 @@ def event_create():
     return render_template('event_manage/create_event.html', form=createForm, heading='Create Event')
 
 # creates the route for the event edit page
-@eventbp.route('/edit_event', methods=['GET','POST'])
-def event_edit():
+@eventbp.route('/<id>/edit_event', methods=['GET','POST'])
+def event_edit(id):
     editForm = CreateEditForm()
     deleteForm = DeleteForm()
     return render_template('event_manage/edit_event.html', form=editForm, form2=deleteForm)
@@ -58,6 +58,10 @@ def valid_date(start_date, end_date):
 
 # creates a route that will display the user's events that they have posted and are editable 
 @eventbp.route('/editable_events', methods=['GET','POST'])
+@login_required
 def editable_events():
+    id = current_user.id 
+    # using a query the events that share the same poster ID as the current user will be added to a list called events which is passed to the template
+    events = db.session.query(Events).filter(Events.event_poster == id)
     editableForm = ValidEditForm()
-    return render_template('event_manage/edit_display.html', form=editableForm)
+    return render_template('event_manage/edit_display.html', form=editableForm, events=events)

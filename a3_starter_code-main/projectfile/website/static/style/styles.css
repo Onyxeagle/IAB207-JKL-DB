@@ -116,6 +116,10 @@ body {
 #detailIMG {
   height: 20vw;
 }
+/* Styles the image on the editable event page */
+#detailIMG2 {
+  height: 5vw;
+}
 
 /* The CSS below is used to place the comment button and size it */
 #postComment {

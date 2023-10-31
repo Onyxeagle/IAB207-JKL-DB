@@ -40,8 +40,11 @@ def purchase_tickets(id):
         puchase = Bookings(bought_tickets=purchaseform.numTickets.data, total_cost=totalCost, event_details=purchase_event.name, ticket_purchaser=current_user.id)
         db.session.add(puchase)
         db.session.commit()
+        # gets the most recent record from the database filtering by ID 
+        # most recent record will be the user's purchase
         real = db.session.query(Bookings).order_by(Bookings.id.desc()).first()
         flash(f'Purchase successful! Your transaction ID is: {real.id}')
+        # decrements the tickets from the event database numTicket value
         decrement_tickets(purchase_event.id, purchaseform.numTickets.data)
         return redirect(url_for('listing.purchase_tickets', id=id))
     return render_template('event_listings/purchase_tickets.html', form=purchaseform, event=purchase_event)
