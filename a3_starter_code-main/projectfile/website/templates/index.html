@@ -64,6 +64,19 @@
             </div>
          </div>
       </div>
+      <div class="card-group">
+         {% for listing in event_list %}
+            <div class="card m-2" id = "card-size">
+               <img class="card-img-top"
+                  src="{{listing.image}}" alt="{{listing.name}}" style = "height: auto; width: auto;">
+               <div class="card-body">
+                  <h5 class="card-title">{{listing.name}}</h5>
+                  <p class="card-text">{{listing.description}}</p>
+               </div>
+               <div class="card-footer"><a href="{{url_for('listing.event_details', id=listing.id)}}" class ="btn btn-danger"> View Details </a></div>
+            </div>
+         {% endfor %}
+      </div>
       <!-- Esnures that the bootstrap elements are called on each page render -->
       {{super()}}
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

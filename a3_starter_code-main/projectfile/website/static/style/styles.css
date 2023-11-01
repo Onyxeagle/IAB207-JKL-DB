@@ -112,7 +112,7 @@ body {
   padding-top: 48px;
 }
 
-/* Styles the image on the event detials page */
+/* Styles the image on the event details page */
 #detailIMG {
   height: 20vw;
 }
@@ -171,4 +171,7 @@ body {
   font-size: 20px;
   font-weight: bold;
   padding-bottom: 25px;
+}
+#card-size {
+  max-width: 20%;
 }
