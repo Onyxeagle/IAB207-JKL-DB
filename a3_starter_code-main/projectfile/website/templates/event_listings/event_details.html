@@ -30,20 +30,19 @@
                   <center>
                      {{render_form(form, "/event_listing/{0}/ticket_purchase".format(event.id))}}
                   </center>
-               {% else if event.status == 'Cancelled' %}
+               {% elif event.status == 'Cancelled' %}
                   <center>
-                     <p>The event has been cancelled</p> 
+                     <p style="color:crimson">The event has been cancelled</p> 
                   </center>
-               {% else if event.status == 'Inactive' %}
-               <center>
-                  <p id="viewText">The date for the event has already passed</p> 
-               </center>
-               {% else if event.status == 'Sold Out' %}
-               <center>
-                  <p id="viewText">There are no tickets available</p> 
-               </center>
+               {% elif event.status == 'Inactive' %}
+                  <center>
+                     <p style="color:blue">The date for the event has already passed</p> 
+                  </center>
+               {% elif event.status == 'Sold Out' %}
+                  <center>
+                     <p style="color:darkgoldenrod">There are no tickets available</p> 
+                  </center>
                {% endif %}
-              
             </div>
          </div>
          <div class="row justify-content-center"> 
