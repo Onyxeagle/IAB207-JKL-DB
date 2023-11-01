@@ -39,7 +39,7 @@ def event_edit(id):
         filter(Events.id == id).\
         update({'name': editForm.eventName.data ,'start_date': editForm.commenceDate.data,'end_date': editForm.concludeDate.data,
                 'description': editForm.eventDescription.data,'genre': editForm.eventGenres.data,'image': db_file_path, 
-               'numTickets': editForm.numTickets.data,'costTickets': editForm.costTickets.data,'location': editForm.eventLocation.data})
+               'numTickets': editForm.numTickets.data,'costTickets': editForm.costTickets.data,'location': editForm.eventLocation.data,'status': 'Open'})
         db.session.commit()
         return redirect(url_for('listing.event_details', id=id))
     deleteForm = DeleteForm()
