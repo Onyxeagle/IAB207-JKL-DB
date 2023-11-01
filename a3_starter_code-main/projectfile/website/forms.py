@@ -13,7 +13,7 @@ class CreateEditForm(FlaskForm):
     eventLocation = StringField('Event Location', validators=[InputRequired()])
     eventGenres = SelectField('Event Genre', choices=['Select Genre','Electronic', 'Classical', 'Rock', 'Metal', 'Pop'], validators=[InputRequired()])
     eventDescription = TextAreaField('Event Description', validators=[InputRequired()])
-    numTickets = IntegerField('Number ofTickets', validators=[InputRequired()])
+    numTickets = IntegerField('Number of Tickets available for purchase', validators=[InputRequired()])
     costTickets = DecimalField('Ticket Price ($AUD)', validators=[InputRequired()])
     eventImage = FileField('Upload event image', validators=[FileRequired(), FileAllowed(ALLOWED_FILE, message='supports jpg and png only')])
     submit = SubmitField('Create')

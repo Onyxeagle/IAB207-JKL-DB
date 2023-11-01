@@ -53,13 +53,18 @@ def purchase_tickets(id):
 def decrement_tickets(id, purchasedTickets):
     purchase_event = db.session.scalar(db.select(Events).where(Events.id == id))
     tickets = purchase_event.numTickets
-    print(tickets)
+    new_tickets = purchase_event.numTickets - purchasedTickets
     # updates a row with the same event id as the one passed to the function
     db.session.query(Events).\
     filter(Events.id == id).\
     update({'numTickets': (tickets - purchasedTickets)})
+    # if the purchase results in the number of tickets becoming zero then replace the status 
+    if new_tickets == 0:
+        db.session.query(Events).\
+        filter(Events.id == id).\
+        update({'status': 'Sold Out'})
     db.session.commit()
-
+    
 # function that checks the tickets being purchased against the available tickets and provides the appropriate response
 def ticket_check(id, purchasedTickets):
     purchase_event = db.session.scalar(db.select(Events).where(Events.id == id))
