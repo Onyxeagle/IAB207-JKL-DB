@@ -20,7 +20,7 @@ def index():
             update({'status': "Inactive"})
             db.session.commit()
             init_event_list.remove(event)
-        if event.status != "Active":
+        if event.status != "Open":
             init_event_list.remove(event)
 
     return render_template('index.html', event_list = init_event_list)
@@ -45,7 +45,7 @@ def search():
                 update({'status': "Inactive"})
                 db.session.commit()
                 init_event_list.remove(event)
-            if event.status != "Active":
+            if event.status != "Open":
                 init_event_list.remove(event)
 
         return render_template('index.html', event_list = init_event_list) #event_list variable added for correct search functionality
