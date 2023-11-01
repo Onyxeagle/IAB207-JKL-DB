@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, SelectField, DecimalField, DateTimeField, IntegerField, SearchField
 from wtforms.validators import InputRequired, Email, EqualTo
 from flask_wtf.file import FileField, FileRequired, FileAllowed
+from flask_login import current_user
 
 ALLOWED_FILE = {'PNG', 'png', 'JPG', 'jpg', 'JPEG', 'jpeg'}
 
@@ -13,7 +14,7 @@ class CreateEditForm(FlaskForm):
     eventLocation = StringField('Event Location', validators=[InputRequired()])
     eventGenres = SelectField('Event Genre', choices=['Select Genre','Electronic', 'Classical', 'Rock', 'Metal', 'Pop'], validators=[InputRequired()])
     eventDescription = TextAreaField('Event Description', validators=[InputRequired()])
-    numTickets = IntegerField('Number ofTickets', validators=[InputRequired()])
+    numTickets = IntegerField('Number of Tickets available for purchase', validators=[InputRequired()])
     costTickets = DecimalField('Ticket Price ($AUD)', validators=[InputRequired()])
     eventImage = FileField('Upload event image', validators=[FileRequired(), FileAllowed(ALLOWED_FILE, message='supports jpg and png only')])
     submit = SubmitField('Create')
@@ -21,7 +22,9 @@ class CreateEditForm(FlaskForm):
 # create the form used to delete an event or delist it
 # this won't actually delete the event record but will change it's status and prevent ticket purchase
 class DeleteForm(FlaskForm):
-    PasswordField = StringField('Enter Password to delete', validators=[InputRequired()])
+    key = "Delete"
+    remove = StringField("Type 'Delete' to delete your event", validators=[InputRequired()])
+    confirm = StringField("Re-type to 'Delete' to confirm deletion", validators=[InputRequired(), EqualTo('remove', 'Confirm deletion')])
     delete = SubmitField('Delete')
 
 # a simple form for the user to log out
@@ -46,14 +49,14 @@ class CreateAccountForm(FlaskForm):
 # to be done
 # this form will be used to display the events a user is part of 
 class HistoryForm(FlaskForm):
-    submit = SubmitField('History')
+    submit = SubmitField('View event')
 
 # to be done
 # this will display all the forms that can be edited by the user
 # an editable form is one that is not inactive or cancelled 
 # inactive being it is passed the end date and cancelled being a deletion 
 class ValidEditForm(FlaskForm):
-    submit = SubmitField('Editable Forms')
+    submit = SubmitField('Edit event')
 
 # to be done
 # this form will be used to allow users to purchase tickets

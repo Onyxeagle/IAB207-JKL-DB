@@ -25,11 +25,24 @@
    {% block content %}
       <div class="container">
          <div class="row justify-content-center">
-            <div class="col-5 col-md-5 col-sm-3" id="detailText">
-               <center>
-                  {{render_form(form, "/event_listing/{0}/ticket_purchase".format(event.id))}}
-               </center>
-              
+            <div class="col-5 col-md-5 col-sm-3" id="viewText">
+               {% if event.status == 'Cancelled' %}
+                  <center>
+                     <p style="color:crimson">The event has been cancelled</p> 
+                  </center>
+               {% elif event.status == 'Inactive' %}
+                  <center>
+                     <p style="color:blue">The date for the event has already passed</p> 
+                  </center>
+               {% elif (event.status == 'Sold Out' and event.numTickets == 0) %}
+                  <center>
+                     <p style="color:darkgoldenrod">There are no tickets available</p> 
+                  </center>
+               {% else %}
+                  <center>
+                     {{render_form(form, "/event_listing/{0}/ticket_purchase".format(event.id))}}
+                  </center>
+               {% endif %}
             </div>
          </div>
          <div class="row justify-content-center"> 

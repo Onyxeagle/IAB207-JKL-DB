@@ -3,7 +3,6 @@ from flask_login import login_required, current_user
 from .forms import TicketPurchase, BookForm, CommentForm, TicketPurchase
 from .models import Events, Comment, Bookings
 from . import db
-from sqlalchemy import update
 
 listingbp = Blueprint('listing', __name__, url_prefix='/event_listing')
 
@@ -38,10 +37,15 @@ def purchase_tickets(id):
     purchase_event = db.session.scalar(db.select(Events).where(Events.id == id))
     if (purchaseform.validate_on_submit() and ticket_check(id, purchaseform.numTickets.data))==True:
         totalCost = purchaseform.numTickets.data * purchase_event.costTickets
-        puchase = Bookings(bought_tickets=purchaseform.numTickets.data, total_cost=totalCost, event_details=purchase_event.id, ticket_purchaser=current_user.id)
+        puchase = Bookings(bought_tickets=purchaseform.numTickets.data, total_cost=totalCost, event_details=purchase_event.name, ticket_purchaser=current_user.id)
         db.session.add(puchase)
         db.session.commit()
-        decrement_tickets(id, purchaseform.numTickets.data)
+        # gets the most recent record from the database filtering by ID 
+        # most recent record will be the user's purchase
+        real = db.session.query(Bookings).order_by(Bookings.id.desc()).first()
+        flash(f'Purchase successful! Your transaction ID is: {real.id}')
+        # decrements the tickets from the event database numTicket value
+        decrement_tickets(purchase_event.id, purchaseform.numTickets.data)
         return redirect(url_for('listing.purchase_tickets', id=id))
     return render_template('event_listings/purchase_tickets.html', form=purchaseform, event=purchase_event)
 
@@ -49,13 +53,18 @@ def purchase_tickets(id):
 def decrement_tickets(id, purchasedTickets):
     purchase_event = db.session.scalar(db.select(Events).where(Events.id == id))
     tickets = purchase_event.numTickets
-    print(tickets)
+    new_tickets = purchase_event.numTickets - purchasedTickets
     # updates a row with the same event id as the one passed to the function
     db.session.query(Events).\
-    filter(id == id).\
+    filter(Events.id == id).\
     update({'numTickets': (tickets - purchasedTickets)})
+    # if the purchase results in the number of tickets becoming zero then replace the status 
+    if new_tickets == 0:
+        db.session.query(Events).\
+        filter(Events.id == id).\
+        update({'status': 'Sold Out'})
     db.session.commit()
-
+    
 # function that checks the tickets being purchased against the available tickets and provides the appropriate response
 def ticket_check(id, purchasedTickets):
     purchase_event = db.session.scalar(db.select(Events).where(Events.id == id))
@@ -67,5 +76,4 @@ def ticket_check(id, purchasedTickets):
         flash('Cannot purchase that number of tickets')
         return False
     else:
-        flash('Purchase successful')
         return True

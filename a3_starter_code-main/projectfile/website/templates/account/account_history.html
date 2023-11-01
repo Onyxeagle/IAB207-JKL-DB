@@ -19,8 +19,16 @@
    {% block content %}
    <div class="container">
       <div class="row justify-content-center">
-         <div class="col-5 col-md-6 col-sm-3" id="detailText">
-            {{render_form(form)}}
+         <div class="col-6 col-md-6 col-sm-3" id="textbody">
+            {% for purchases in purchase.booker %}
+            <div class="jumbotron">
+               <h1 class="display-6">Transaction ID: {{purchases.id}}</h1>
+               <p class="display-7">Event Name: {{purchases.event_details}}</p>
+               <p>Number of tickets purchased: x{{purchases.bought_tickets}}</p>
+               <p>Total cost of order: ${{purchases.total_cost}}</p>
+               <hr>
+            </div>
+            {% endfor %} 
          </div>
       </div>
    </div>

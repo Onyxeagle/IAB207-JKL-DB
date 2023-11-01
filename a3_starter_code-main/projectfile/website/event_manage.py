@@ -28,11 +28,31 @@ def event_create():
     return render_template('event_manage/create_event.html', form=createForm, heading='Create Event')
 
 # creates the route for the event edit page
-@eventbp.route('/edit_event', methods=['GET','POST'])
-def event_edit():
+@eventbp.route('/<id>/edit_event', methods=['GET','POST'])
+def event_edit(id):
     editForm = CreateEditForm()
+    event = db.session.query(Events).filter(Events.id == id)
+    if (editForm.validate_on_submit() and valid_date(editForm.commenceDate.data, editForm.concludeDate.data))==True:
+        db_file_path = check_upload_file(editForm)
+        # updates a row with the same event id as the one passed to the function
+        db.session.query(Events).\
+        filter(Events.id == id).\
+        update({'name': editForm.eventName.data ,'start_date': editForm.commenceDate.data,'end_date': editForm.concludeDate.data,
+                'description': editForm.eventDescription.data,'genre': editForm.eventGenres.data,'image': db_file_path, 
+               'numTickets': editForm.numTickets.data,'costTickets': editForm.costTickets.data,'location': editForm.eventLocation.data,'status': 'Open'})
+        db.session.commit()
+        return redirect(url_for('listing.event_details', id=id))
     deleteForm = DeleteForm()
-    return render_template('event_manage/edit_event.html', form=editForm, form2=deleteForm)
+    # if the delete form is submitted it will then change the event status to cancelled
+    if deleteForm.validate_on_submit():
+        stats = "Cancelled"
+        db.session.query(Events).\
+        filter(Events.id == id).\
+        update({'status': stats})
+        db.session.commit()
+        return redirect(url_for('listing.event_details', id=id))
+    return render_template('event_manage/edit_event.html', form=editForm, form2=deleteForm, event=event)
+
 
 # a function that is used to direct the directory pathway for the image the user uploads
 def check_upload_file(form):
@@ -58,6 +78,10 @@ def valid_date(start_date, end_date):
 
 # creates a route that will display the user's events that they have posted and are editable 
 @eventbp.route('/editable_events', methods=['GET','POST'])
+@login_required
 def editable_events():
+    id = current_user.id 
+    # using a query the events that share the same poster ID as the current user will be added to a list called events which is passed to the template
+    events = db.session.query(Events).filter(Events.event_poster == id)
     editableForm = ValidEditForm()
-    return render_template('event_manage/edit_display.html', form=editableForm)
+    return render_template('event_manage/edit_display.html', form=editableForm, events=events)
