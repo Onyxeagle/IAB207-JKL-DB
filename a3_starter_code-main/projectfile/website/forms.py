@@ -45,14 +45,14 @@ class CreateAccountForm(FlaskForm):
 # to be done
 # this form will be used to display the events a user is part of 
 class HistoryForm(FlaskForm):
-    submit = SubmitField('History')
+    submit = SubmitField('View event')
 
 # to be done
 # this will display all the forms that can be edited by the user
 # an editable form is one that is not inactive or cancelled 
 # inactive being it is passed the end date and cancelled being a deletion 
 class ValidEditForm(FlaskForm):
-    submit = SubmitField('Editable Forms')
+    submit = SubmitField('Edit event')
 
 # to be done
 # this form will be used to allow users to purchase tickets
