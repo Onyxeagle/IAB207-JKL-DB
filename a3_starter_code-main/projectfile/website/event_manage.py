@@ -45,7 +45,7 @@ def event_edit(id):
     deleteForm = DeleteForm()
     # if the delete form is submitted it will then change the event status to cancelled
     if deleteForm.validate_on_submit():
-        stats = "cancelled"
+        stats = "Cancelled"
         db.session.query(Events).\
         filter(Events.id == id).\
         update({'status': stats})
