@@ -25,6 +25,6 @@ def search():
         event_list = db.session.scalars(db.select(Events).filter(
             or_(Events.name.like(query), Events.description.like(query), Events.genre.like(query))))
         print(event_list)
-        return render_template('index.html', event_list = event_list)
+        return render_template('index.html', event_list = event_list) #event_list variable added for correct search functionality
     else:
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.index')) 
