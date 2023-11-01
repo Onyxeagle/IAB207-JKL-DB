@@ -43,6 +43,7 @@ def event_edit(id):
         db.session.commit()
         return redirect(url_for('listing.event_details', id=id))
     deleteForm = DeleteForm()
+    # if the delete form is submitted it will then change the event status to cancelled
     if deleteForm.validate_on_submit():
         stats = "cancelled"
         db.session.query(Events).\

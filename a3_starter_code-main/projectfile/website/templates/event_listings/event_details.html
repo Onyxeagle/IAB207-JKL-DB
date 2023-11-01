@@ -25,10 +25,24 @@
    {% block content %}
       <div class="container">
          <div class="row justify-content-center">
-            <div class="col-5 col-md-5 col-sm-3" id="detailText">
+            <div class="col-5 col-md-5 col-sm-3" id="viewText">
+               {% if event.status == 'Open' %}
+                  <center>
+                     {{render_form(form, "/event_listing/{0}/ticket_purchase".format(event.id))}}
+                  </center>
+               {% else if event.status == 'Cancelled' %}
+                  <center>
+                     <p>The event has been cancelled</p> 
+                  </center>
+               {% else if event.status == 'Inactive' %}
                <center>
-                  {{render_form(form, "/event_listing/{0}/ticket_purchase".format(event.id))}}
+                  <p id="viewText">The date for the event has already passed</p> 
                </center>
+               {% else if event.status == 'Sold Out' %}
+               <center>
+                  <p id="viewText">There are no tickets available</p> 
+               </center>
+               {% endif %}
               
             </div>
          </div>
