@@ -39,11 +39,21 @@
                {% for event in events %}
                <div class="jumbotron bg-light">
                   <h1 class="display-6">Event name: {{event.name}}</h1>
-                  <p class="display-7">Event status: {{event.status}}</p>
+                  {% if event.status == 'Open' %}
+                  <p style="color:green" class="display-7">Event status: {{event.status}}</p>
+                  {% elif event.status == 'Sold Out' %}
+                  <p style="color:darkgoldenrod" class="display-7">Event status: {{event.status}}</p>
+                  {% elif event.status == 'Cancelled' %}
+                  <p style="color:crimson" class="display-7">Event status: {{event.status}}</p>
+                  {% elif event.status == 'Inactive' %}
+                  <p style="color:blue" class="display-7">Event status: {{event.status}}</p>
+                  {% endif %}
                   <p class="display-7">Event genre: {{event.genre}}</p>
                   <img src="{{event.image}}" id="detailIMG2"> 
+                  {% if event.status != 'Cancelled' or event.status != 'Inactive' %}
                   <p>Event datetime: {{event.start_date}} - {{event.end_date}}</p>
                      {{render_form(form, "/event_manage/{0}/edit_event".format(event.id))}}
+                  {% endif %}
                   <hr>
                </div>
                {% endfor %}
