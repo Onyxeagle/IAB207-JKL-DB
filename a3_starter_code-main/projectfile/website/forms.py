@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, SelectField, DecimalField, DateTimeField, IntegerField, SearchField
 from wtforms.validators import InputRequired, Email, EqualTo
 from flask_wtf.file import FileField, FileRequired, FileAllowed
+from flask_login import current_user
 
 ALLOWED_FILE = {'PNG', 'png', 'JPG', 'jpg', 'JPEG', 'jpeg'}
 
@@ -21,6 +22,9 @@ class CreateEditForm(FlaskForm):
 # create the form used to delete an event or delist it
 # this won't actually delete the event record but will change it's status and prevent ticket purchase
 class DeleteForm(FlaskForm):
+    key = "Delete"
+    remove = StringField("Type 'Delete' to delete your event", validators=[InputRequired()])
+    confirm = StringField("Re-type to 'Delete' to confirm deletion", validators=[InputRequired(), EqualTo('remove', 'Confirm deletion')])
     delete = SubmitField('Delete')
 
 # a simple form for the user to log out

@@ -50,6 +50,7 @@ def event_edit(id):
         filter(Events.id == id).\
         update({'status': stats})
         db.session.commit()
+        return redirect(url_for('listing.event_details', id=id))
     return render_template('event_manage/edit_event.html', form=editForm, form2=deleteForm, event=event)
 
 
